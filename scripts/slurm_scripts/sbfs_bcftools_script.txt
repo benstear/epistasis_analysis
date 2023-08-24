@@ -25,6 +25,7 @@ echo "SLURMTMPDIR="$SLURMTMPDIR cd $SLURM_SUBMIT_DIR
 echo "working directory = "$SLURM_SUBMIT_DIR
 module load intel-mpi/4.1.0
 module list
+module load bcftools
 ulimit -s unlimited
 echo "Launch helloworld with sun"
 export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
