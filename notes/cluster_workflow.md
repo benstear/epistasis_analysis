@@ -23,15 +23,26 @@ test_gvcf_download_links2.txt is a list of download links
 To download `sbfs cli`, do: `sudo yum install fuse`   # need to have fuse installed first
 `curl https://igor.sbgenomics.com/downloads/sbfs/install.sh -sSf | sudo sh`       # from https://docs.sevenbridges.com/docs/install-sbfs-automatically
 sbfs configure
-Example: sbfs mount ~/documents/my-folder --project rfranklin/my-project
-
 
 Use this command to download sbfs (from this [page](https://docs.sevenbridges.com/docs/command-line-interface)):
 
 `bash -c 'curl https://igor.sbgenomics.com/downloads/sb/install.sh -sSf ø sudo -H sh'`
 
-NOT the command on the CAVATICA sbfs install page
+Do NOT use the command on the CAVATICA sbfs install page
 
+Then mount the CAVATICA project
+
+Command Signature: `sbfs mount ~/documents/my-folder --project rfranklin/my-project`
+
+To mount the project: 
+
+```
+cd /home/stearb/gvcf_workflow/data/gvcfs/; mkdir mount_dir
+sbfs mount mount_dir/ --project taylordm/taylor-urbs-r03-kf-cardiac
+mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac
+```
+
+To unmount:  `sbfs unmount mount_dir/`
 
 ### I will just mount my project so I have access to the files w/o having to transfer and store them on the remote server
 ### I mounted the project in mount_dir in /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac
@@ -50,3 +61,9 @@ which bcftools
 
 ### Next step: download GATK 
 https://gatk.broadinstitute.org/hc/en-us/articles/360041320571--How-to-Install-all-software-packages-required-to-follow-the-GATK-Best-Practices
+
+
+
+# Can I mount the cavatica file system to the HPC and submit a SLURM job that uses cavatica files?
+
+
