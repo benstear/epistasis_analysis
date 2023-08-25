@@ -9,10 +9,10 @@
 #SBATCH --ntasks-per-node=8
 # Memory per node specification is in MB. It is optional.
 # The default limit is 3GB per core.
-##SBATCH --mem=24000
+##SBATCH --mem-per-cpu=1024000 # 1000GB
 #SBATCH --job-name="hello_test"
 #SBATCH --output=test-srun.out
-#SBATCH --mail-user=username@rowan.edu
+#SBATCH --mail-user=stearb@chop.edu
 #SBATCH --mail-type=ALL
 #Specifies that the job will be requeued after a node failure.
 #The default is that the job will not be dequeued.
@@ -23,11 +23,8 @@ echo "SLURM_JOB_NODELIST"=$SLURM_JOB_NODELIST
 echo "SLURM_NNODES"=$SLURM_NNODES
 echo "SLURMTMPDIR="$SLURMTMPDIR cd $SLURM_SUBMIT_DIR
 echo "working directory = "$SLURM_SUBMIT_DIR
-module load intel-mpi/4.1.0
-module list
 module load bcftools
 ulimit -s unlimited
 echo "Launch helloworld with sun"
-export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
-srun ./helloworld
+srun ./gvcf_merge_script
 echo "All Done!"
