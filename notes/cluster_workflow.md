@@ -36,11 +36,11 @@ mkdir .sevenbridges; cd .sevenbridges; vi credentials
 mv .sevenbridges/* /home/stearb
 
 
-
+```bash
 [taylordm]
 api_endpoint = https://cavatica-api.sbgenomics.com/v2
 auth_token = c05edbf9ffe041479f063666e23f675f
-
+```
 
  --------------------------------
  
