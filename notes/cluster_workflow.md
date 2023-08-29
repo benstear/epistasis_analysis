@@ -30,6 +30,20 @@ Use this command to download sbfs (from this [page](https://docs.sevenbridges.co
 
 Do NOT use the command on the CAVATICA sbfs install page
 
+`sb configure`
+Follow directions on this page: https://docs.sevenbridges.com/docs/store-credentials-to-access-seven-bridges-client-applications-and-libraries
+mkdir .sevenbridges; cd .sevenbridges; vi credentials
+mv .sevenbridges/* /home/stearb
+
+
+
+[taylordm]
+api_endpoint = https://cavatica-api.sbgenomics.com/v2
+auth_token = c05edbf9ffe041479f063666e23f675f
+
+
+ --------------------------------
+ 
 Then mount the CAVATICA project
 
 Command Signature: `sbfs mount ~/documents/my-folder --project rfranklin/my-project`
