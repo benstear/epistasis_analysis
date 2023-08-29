@@ -45,9 +45,6 @@ You can specify parameters as comments in the script like this:
 Also look into using GPU native Python packages like [cuPy](https://cupy.dev) or [cuDF](https://docs.rapids.ai/api/cudf/stable/).
 
 
-
-
-
 ## Code to install `sbfs` on the HPC (in the array job )
 #!/bin/bash
 curl https://igor.sbgenomics.com/downloads/sbfs/linux-amd64/sbfs -O;
@@ -57,3 +54,15 @@ sudo mv sbfs /usr/local/bin/;
 
 
 srun --pty bash
+
+
+
+
+
+
+
+
+
+
+
+
