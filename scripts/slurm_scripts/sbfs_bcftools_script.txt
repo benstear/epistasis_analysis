@@ -42,11 +42,59 @@ echo "All Done!"
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=500M
 
-## Job Steps
-srun echo "`Start process`"
-srun hostname
-mkdir mount_dir
+
+#SBATCH --job-name=array
+#SBATCH --array=1-20
+#SBATCH --time=01:00:00
+#SBATCH --partition=normal
+#SBATCH --ntasks=1
+#SBATCH --mem=1G
+#SBATCH --output=array_%A-%a.out
+----------------------------------------------------
+
+###################### Put this in bash file called mount.sh
+#!/bin/bash
+echo "Start process"
+#mkdir mount_dir
+pwd
+ls
+sbfs configure
 sbfs mount mount_dir/ --project taylordm/taylor-urbs-r03-kf-cardiac
 mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac
-srun sleep 30
-srun echo "`End process`"
+echo "End process"
+--------------
+
+
+
+make this the script you call from command line called job_script.sh
+#!/bin/sh
+##SBATCH --partition=compute
+#SBATCH --time=00:15:00
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=8
+# Memory per node specification is in MB. It is optional.
+# The default limit is 3GB per core.
+##SBATCH --mem-per-cpu=1024000 # 1000GB
+#SBATCH --job-name="hello_test"
+#SBATCH --output=test-srun.out
+#SBATCH --mail-user=stearb@chop.edu
+#SBATCH --mail-type=ALL
+#Specifies that the job will be requeued after a node failure.
+#The default is that the job will not be dequeued.
+##SBATCH --requeue
+
+## Job Steps
+srun or sbatch ./mount.sh
+
+---------------
+
+then do:
+
+./job_script.sh
+
+
+
+
+
+
+
