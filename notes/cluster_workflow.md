@@ -32,11 +32,10 @@ Do NOT use the command on the CAVATICA sbfs install page
 
 `sb configure`
 Follow directions on this page: https://docs.sevenbridges.com/docs/store-credentials-to-access-seven-bridges-client-applications-and-libraries
-mkdir .sevenbridges; cd .sevenbridges; vi credentials
-mv .sevenbridges/* /home/stearb
 
+`mkdir .sevenbridges; cd .sevenbridges; vi credentials; mv .sevenbridges/* /home/stearb`
 
-```bash
+```
 [taylordm]
 api_endpoint = https://cavatica-api.sbgenomics.com/v2
 auth_token = c05edbf9ffe041479f063666e23f675f
