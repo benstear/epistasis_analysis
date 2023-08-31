@@ -61,17 +61,18 @@ printf "Start Cavatica File System Mount Process\n"
 printf "=======================================\n"
 
 if [ -d mount_dir ]; then
-  printf "mount_dir exists."
+  printf "mount_dir exists...\n"
 else
-  printf "Creating mount_dir..."; mkdir mount_dir
+  printf "Creating mount_dir...\n"; mkdir mount_dir
 fi
 #mkdir mount_dir
 #pwd; ls
 printf '\nconfiguring...\n'
-sbfs configure
+sudo sbfs configure
 printf '\nmounting...\n'
 sbfs mount mount_dir/ --project taylordm/taylor-urbs-r03-kf-cardiac
-mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac
+ls mount_dir/projects
+#/taylordm/taylor-urbs-r03-kf-cardiac
 printf "End process"
 --------------
 
