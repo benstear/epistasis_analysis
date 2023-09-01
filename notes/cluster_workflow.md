@@ -76,6 +76,20 @@ which bcftools
 https://gatk.broadinstitute.org/hc/en-us/articles/360041320571--How-to-Install-all-software-packages-required-to-follow-the-GATK-Best-Practices
 
 
+https://www.osc.edu/book/export/html/4046
+https://www.biostars.org/p/9469196/
+https://adam.readthedocs.io/en/latest/references/
+https://www.biostars.org/p/9562952/
+
+
+### 
+https://stackoverflow.com/questions/6264596/simulating-enter-keypress-in-bash-script
+
+https://stackoverflow.com/questions/65603381/slurm-nodes-tasks-cores-and-cpus#:~:text=a%20CPU%20in%20a%20general,based%20on%20the%20Slurm%20configuration.
+
+
+
+
 
 # Can I mount the cavatica file system to the HPC and submit a SLURM job that uses cavatica files?
 
