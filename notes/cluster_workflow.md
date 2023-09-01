@@ -72,25 +72,49 @@ sudo make install
 which bcftools
 ```
 
-### Next step: download GATK 
+### Next step: download GATK <-----NOT YET...
 https://gatk.broadinstitute.org/hc/en-us/articles/360041320571--How-to-Install-all-software-packages-required-to-follow-the-GATK-Best-Practices
 
-
+How to submit multiple jobs using parameters with a Python helper script.
 https://www.osc.edu/book/export/html/4046
-https://www.biostars.org/p/9469196/
-https://adam.readthedocs.io/en/latest/references/
-https://www.biostars.org/p/9562952/
 
 
-### 
+#### Can I mount the cavatica file system to the HPC and submit a SLURM job that uses cavatica files?
+
+-----------------
+
+# September 1st update
+
+### [x] Got RIS to install `sbfs` on Respublica HPC
+### [x] Made a file that contains `N` gVCF filenames (of the 711 probands from the CHD) per row so that I can feed it to a job or a script, and each line will be fed to a different thread/task/CPU. So if each line contains 10 file names, then I'll have about 71 tasks, running in parallel, each of which will be emerging 10 gVCFs.
+
+Also need to have a file that contains a simple list of the file names so that I can run the following commands on every file:
+- `Norm/left align`
+- `split multi-allelic sites`
+- `filter` (what filters — )
+- `sort`
+- `index`
+  
+### [] Need to figure out a way to pass the enter key to the `sbfs configure` command bc it makes you press Enter twice, wants to confirm the APIURL and wants to confirm the developer token. 
 https://stackoverflow.com/questions/6264596/simulating-enter-keypress-in-bash-script
 
-https://stackoverflow.com/questions/65603381/slurm-nodes-tasks-cores-and-cpus#:~:text=a%20CPU%20in%20a%20general,based%20on%20the%20Slurm%20configuration.
+
+### [] also need to figure out exactly how to pass args, (should just be 1-N where N is the # of splits) to the SLURM job array
 
 
+if I have a script like so:
+
+SBATCH -array 1-N
+SBATCH mem-
+SBTATCH time-
+SBATCH name-
+module load sbfs
+module load BFCtools
+sbfs mount ...
+bcftools merge $SLURM_ARRAY_TASK_ID
+
+need to somehow pass this as an arg to index the file of filenames 
 
 
-
-# Can I mount the cavatica file system to the HPC and submit a SLURM job that uses cavatica files?
 
 
