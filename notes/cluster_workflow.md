@@ -98,23 +98,12 @@ Also need to have a file that contains a simple list of the file names so that I
 ### [] Need to figure out a way to pass the enter key to the `sbfs configure` command bc it makes you press Enter twice, wants to confirm the APIURL and wants to confirm the developer token. 
 https://stackoverflow.com/questions/6264596/simulating-enter-keypress-in-bash-script
 
+- nothing from ^ page worked, I can still try the `expect` tool mentioned there but I need to get RIS to install it.
 
-### [] also need to figure out exactly how to pass args, (should just be 1-N where N is the # of splits) to the SLURM job array
+### [x] also need to figure out exactly how to pass args, (should just be 1-N where N is the # of splits) to the SLURM job array
 
 
-if I have a script like so:
-
-SBATCH -array 1-N
-SBATCH mem-
-SBTATCH time-
-SBATCH name-
-module load sbfs
-module load BFCtools
-sbfs mount ...
-bcftools merge $SLURM_ARRAY_TASK_ID
-
-need to somehow pass this as an arg to index the file of filenames 
-
+If I cant mount my files to each of the worker nodes in the array, can I feed them downloadlinks and download the files on the worker nodes memory? BC if I do this in parallel then I wont have enough mem on the head node, if thats where downloaded data gets stored.
 
 
 
