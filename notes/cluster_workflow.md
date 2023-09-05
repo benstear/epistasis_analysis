@@ -110,3 +110,12 @@ If I cant mount my files to each of the worker nodes in the array, can I feed th
 ### [] Need to time the various steps on the cluster (norm, split, filter, sort, index)
 - do I need to convert to bcf format first? Will that speed things up?
 
+#### Results of testing this file on Taylor cluster, /vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz (5.4GB):
+
+Converting a full `.g.vcf` to `.bcf` with no filtering took: ~20min
+`bcftools view `
+
+Norm/left-align and splitting multi-allelic sites from this `bcf` file took:
+the -m flag will split multi-allelic sites, I specified only at SNP sites.
+https://github.com/samtools/bcftools/issues/40
+`bcftools norm -m snps`
