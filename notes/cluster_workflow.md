@@ -110,12 +110,32 @@ If I cant mount my files to each of the worker nodes in the array, can I feed th
 ### [] Need to time the various steps on the cluster (norm, split, filter, sort, index)
 - do I need to convert to bcf format first? Will that speed things up?
 
-#### Results of testing this file on Taylor cluster, /vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz (5.4GB):
+### Results of testing using this file, /vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz (5.4GB) on Taylor cluster,:
 
 Converting a full `.g.vcf` to `.bcf` with no filtering took: ~20min
-`bcftools view `
+`bcftools view --output-type b /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac/vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz  -o 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs.bcf.gz`
+
+Same thing but with the SNPs flag so only SNPs are included took: ~7min
+`bcftools view --types snps  --output-type b /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac/vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz  -o 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs.bcf.gz`
 
 Norm/left-align and splitting multi-allelic sites from this `bcf` file took:
 the -m flag will split multi-allelic sites, I specified only at SNP sites.
 https://github.com/samtools/bcftools/issues/40
-`bcftools norm -m snps`
+`bcftools norm -m snps -f FASTA.ref  `
+
+
+
+BCFtools workflow plan:
+1. Drop everything but SNPs and convert to .bcf using VIEW: `bcftools view --types snps  --output-type b in.vcf.gz -o out.bcf.gz`
+2. Norm/left-align and split multi-allelic sites using NORM: `bcftools norm -m snps -f FASTA.ref`
+   can also make index w/ norm ^^?
+3. Sort using SORT
+4. Index using INDEX
+5. Merge using MERGE
+   
+   Do I need to resort/reindex/drop-duplicates after merging? 
+
+
+
+
+
