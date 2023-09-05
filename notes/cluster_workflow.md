@@ -95,7 +95,7 @@ Also need to have a file that contains a simple list of the file names so that I
 - `sort`
 - `index`
   
-### [] Need to figure out a way to pass the enter key to the `sbfs configure` command bc it makes you press Enter twice, wants to confirm the APIURL and wants to confirm the developer token. 
+### [ ] Need to figure out a way to pass the enter key to the `sbfs configure` command bc it makes you press Enter twice, wants to confirm the APIURL and wants to confirm the developer token. 
 https://stackoverflow.com/questions/6264596/simulating-enter-keypress-in-bash-script
 
 - nothing from ^ page worked, I can still try the `expect` tool mentioned there but I need to get RIS to install it.
@@ -106,4 +106,7 @@ https://stackoverflow.com/questions/6264596/simulating-enter-keypress-in-bash-sc
 If I cant mount my files to each of the worker nodes in the array, can I feed them downloadlinks and download the files on the worker nodes memory? BC if I do this in parallel then I wont have enough mem on the head node, if thats where downloaded data gets stored.
 
 
+
+### [] Need to time the various steps on the cluster (norm, split, filter, sort, index)
+- do I need to convert to bcf format first? Will that speed things up?
 
