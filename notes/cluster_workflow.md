@@ -110,31 +110,51 @@ If I cant mount my files to each of the worker nodes in the array, can I feed th
 ### [] Need to time the various steps on the cluster (norm, split, filter, sort, index)
 - do I need to convert to bcf format first? Will that speed things up?
 
-### Results of testing using this file, /vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz (5.4GB) on Taylor cluster,:
+## Results of testing using this file, /vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz (5.4GB) on Taylor cluster,:
 
-Converting a full `.g.vcf` to `.bcf` with no filtering took: ~20min
+#### Converting a full `.g.vcf` to `.bcf` with no filtering took: ~20min
 `bcftools view --output-type b /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac/vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz  -o 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs.bcf.gz`
 
-Same thing but with the SNPs flag so only SNPs are included took: ~7min
+#### Same thing but with the SNPs flag so only SNPs are included took: ~7min
 `bcftools view --types snps  --output-type b /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac/vcf_test_path/006f8b8b-8d08-4cca-83a4-79c6a7195fac.g.vcf.gz  -o 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs.bcf.gz`
 
-Norm/left-align and splitting multi-allelic sites from this `bcf` file took:
+
+`bcftools view --types snps  --output-type b  -o fed3c370-3b2e-44f3-a055-65ff88cdfcfe-SNPs.bcf.gz /home/stearb/gvcf_workflow/data/gvcfs/mount_dir/projects/taylordm/taylor-urbs-r03-kf-cardiac/fed3c370-3b2e-44f3-a055-65ff88cdfcfe.g.vcf.gz`
+
+Did the same thing with fed3c370-3b2e-44f3-a055-65ff88cdfcfe.g.vcf.gz in order to time the `merge` of 2 smaller files
+
+
+#### Norm/left-align and splitting multi-allelic sites from this `bcf` file took: ~1min on the SNPs-only VCF file (~200mb)
 the -m flag will split multi-allelic sites, I specified only at SNP sites.
 https://github.com/samtools/bcftools/issues/40
-`bcftools norm -m snps -f FASTA.ref  `
+`bcftools norm --multiallelics -snps --fasta-ref Homo_sapiens_assembly38.fasta --output-type v 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs.vcf.gz --output 006f8b8b-8d08-4cca-83a4-79c6a7195fac-SNPs-splitMA.vcf.gz`
+
+Lines   total/split/realigned/skipped:	4908664/4908664/13812/0
+
+
+#### Merge vcfs together
+Merging 2 snps-only filtered vcfs, which are 190mb and 217mb respectively, took: 32 seconds and only 1.7GB in VCF format
+`bcftools merge  --output bcf_merge.merged.vcf --threads 12 --missing-to-ref --merge none --no-index --output-type v 006f8b8b-8d08-4cca-83a4-79c6a7195fac.bcf.gz fed3c370-3b2e-44f3-a055-65ff88cdfcfe-SNPs.bcf.gz`
 
 
 
 BCFtools workflow plan:
 1. Drop everything but SNPs and convert to .bcf using VIEW: `bcftools view --types snps  --output-type b in.vcf.gz -o out.bcf.gz`
-2. Norm/left-align and split multi-allelic sites using NORM: `bcftools norm -m snps -f FASTA.ref`
+2. Filter using FILTER, can filter using regions/BED file here?
+  can do filtering in step 1?
+4. Norm/left-align and split multi-allelic sites using NORM: `bcftools norm -m snps -f FASTA.ref`
    can also make index w/ norm ^^?
-3. Sort using SORT
-4. Index using INDEX
-5. Merge using MERGE
-   
-   Do I need to resort/reindex/drop-duplicates after merging? 
 
+5. Sort using SORT
+6. Index using INDEX
+7. Merge using MERGE
+   
+Do I need to resort/reindex/drop-duplicates after merging?
+If I use grep/awk/sed to remove <NON_REF> containing lines, I probably need the file to be in vcf or vcf.gz format?
+Need to sort before making index?
+Do the INFO/FORMAT change when multi-allelic sites get split? write py script to compare?
+
+ The input file should be the last string in the command, ie `bcftools filter [options] file`
 
 
 
