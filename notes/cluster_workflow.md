@@ -133,18 +133,16 @@ Lines   total/split/realigned/skipped:	4908664/4908664/13812/0
 
 
 #### Merge vcfs together
-Merging 2 snps-only filtered vcfs, which are 190mb and 217mb respectively, took: 32 seconds and only 1.7GB in VCF format
+Merging 2 snps-only filtered vcfs, which are 190mb and 217mb respectively, took: 32 seconds and is only 1.7GB in VCF format
 `bcftools merge  --output bcf_merge.merged.vcf --threads 12 --missing-to-ref --merge none --no-index --output-type v 006f8b8b-8d08-4cca-83a4-79c6a7195fac.bcf.gz fed3c370-3b2e-44f3-a055-65ff88cdfcfe-SNPs.bcf.gz`
-
 
 
 BCFtools workflow plan:
 1. Drop everything but SNPs and convert to .bcf using VIEW: `bcftools view --types snps  --output-type b in.vcf.gz -o out.bcf.gz`
-2. Filter using FILTER, can filter using regions/BED file here?
+2. Filter using FILTER (for read depth, GQ), can filter using regions/BED file here?
   can do filtering in step 1?
 4. Norm/left-align and split multi-allelic sites using NORM: `bcftools norm -m snps -f FASTA.ref`
    can also make index w/ norm ^^?
-
 5. Sort using SORT
 6. Index using INDEX
 7. Merge using MERGE
@@ -155,6 +153,13 @@ Need to sort before making index?
 Do the INFO/FORMAT change when multi-allelic sites get split? write py script to compare?
 
  The input file should be the last string in the command, ie `bcftools filter [options] file`
+
+
+
+For loop for looping through files:
+
+loop through folder or file of filenames? 
+
 
 
 
